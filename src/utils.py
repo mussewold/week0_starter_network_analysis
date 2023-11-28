@@ -48,7 +48,7 @@ def get_messages_dict(msgs):
     msg_list = {
         "msg_id": [],
         "text": [],
-        "attachments": [],
+        # "attachments": [],
         "user": [],
         "mentions": [],
         "emojis": [],
@@ -116,6 +116,7 @@ def get_messages_dict(msgs):
                 msg_list["link_count"].append(0)
 
     return msg_list
+
 def from_msg_get_replies(msg):
     replies = []
     if "thread_ts" in msg and "replies" in msg:
