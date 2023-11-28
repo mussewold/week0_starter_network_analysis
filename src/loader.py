@@ -34,7 +34,7 @@ class SlackDataLoader:
         '''
         self.path = path
         self.channels = self.get_channels()
-        self.users = self.get_ussers()
+        self.users = self.get_users()
     
 
     def get_users(self):
@@ -55,12 +55,36 @@ class SlackDataLoader:
 
         return channels
 
+    # def get_channel_messages(self, channel_name):
+    #     '''
+    #     write a function to get all the messages from a channel
+        
+    #     '''
     def get_channel_messages(self, channel_name):
         '''
-        write a function to get all the messages from a channel
-        
-        '''
+        Get all the messages from a channel.
 
+        Parameters:
+        - channel_name: The name of the channel.
+
+        Returns:
+        - List of messages in the channel.
+        '''
+        channel_messages = []
+
+        # Assuming messages are stored in JSON files within a folder named after the channel
+        channel_folder_path = os.path.join(self.path, channel_name)
+
+        if os.path.exists(channel_folder_path):
+            # Iterate through files in the channel folder
+            for file_name in os.listdir(channel_folder_path):
+                if file_name.endswith('.json'):
+                    file_path = os.path.join(channel_folder_path, file_name)
+                    with open(file_path, 'r') as f:
+                        messages = json.load(f)
+                        channel_messages.extend(messages)
+
+        return channel_messages
     # 
     def get_user_map(self):
         '''
@@ -73,7 +97,7 @@ class SlackDataLoader:
             userIdsByName[user['name']] = user['id']
         return userNamesById, userIdsByName        
 
-
+    #### moved methods
 
 
 if __name__ == "__main__":
